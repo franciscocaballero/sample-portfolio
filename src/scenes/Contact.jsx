@@ -1,6 +1,6 @@
 import LineGradient from "../components/LineGradinet";
 import { motion } from "framer-motion";
-import { appendErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const Contact = () => {
   const {
@@ -18,6 +18,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-48">
       <motion.div
+        className="flex justify-end w-full"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
@@ -27,11 +28,13 @@ const Contact = () => {
           visible: { opacity: 1, x: 0 },
         }}
       >
-        <p className="font-playfair font-semibold text-4xl mv-5 ">
-          <span className="text-yellow">CONTACT ME</span> TO GET STARTED
-        </p>
-        <div className="flex md:justify-end my-5">
-          <LineGradient />
+        <div>
+          <p className="font-playfair font-semibold text-4xl mv-5 ">
+            <span className="text-yellow">CONTACT ME</span> TO GET STARTED
+          </p>
+          <div className="flex md:justify-end my-5">
+            <LineGradient width="mx-auto w-2/4" />
+          </div>
         </div>
       </motion.div>
 
@@ -62,7 +65,12 @@ const Contact = () => {
             visible: { opacity: 1, y: 0 },
           }}
         >
-          <form target="_blank" onSubmit={onSubmit} action="" method="POST">
+          <form
+            target="_blank"
+            onSubmit={onSubmit}
+            action="https://formsubmit.co/aba965a821189412d5c435040ec83952"
+            method="POST"
+          >
             <input
               className="w-full bg-blue font-semibold placeholder-opaque-black p-3 "
               type="text"
@@ -79,6 +87,51 @@ const Contact = () => {
                 {errors.name.type === "maxLength" && "Max length is 100 char."}
               </p>
             )}
+
+            <input
+              className="w-full bg-blue font-semibold placeholder-opaque-black p-3 mt-5"
+              type="email"
+              placeholder="EMAIL"
+              {...register("email", {
+                required: true,
+                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              })}
+            />
+
+            {errors.email && (
+              <p className="text-red mt-1">
+                {errors.email.type === "required" && "This field is required."}
+                {errors.email.type === "pattern" && "Invaild email address"}
+              </p>
+            )}
+
+            <textarea
+              className="w-full bg-blue font-semibold placeholder-opaque-black p-3 mt-5"
+              type="text"
+              rows="4"
+              cols="50"
+              placeholder="MESSAGE"
+              {...register("message", {
+                required: true,
+                maxLength: 2000,
+              })}
+            />
+
+            {errors.message && (
+              <p className="text-red mt-1">
+                {errors.message.type === "required" &&
+                  "This field is required."}
+                {errors.message.type === "maxLength" &&
+                  "Max length is 200 char."}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="p-5 bg-yellow font-semibold text-deep-blue mt-5 hover:bg-red hover:text-white transition duration-500"
+            >
+              SEND ME A MESSAGE
+            </button>
           </form>
         </motion.div>
       </div>
